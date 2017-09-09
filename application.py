@@ -87,6 +87,9 @@ def guide():
 def search():
     return render_template("search.html")
 
+@app.route("/sort", methods=["GET", "POST"])
+def sort():
+    return render_template("sort.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

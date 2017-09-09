@@ -69,7 +69,6 @@ def login_required(f):
     return decorated_function
 
 @app.route("/index", methods=["GET", "POST"])
-@login_required
 def index():
     """Home page."""
     
@@ -109,6 +108,8 @@ def login():
         session["student"] = request.form.get("student")
         session["classroom"] = request.form.get("classroom")
 
+        print "here!!!!!!!!!!!!!!!!!"
+        
         return redirect(url_for("index"))
 
 

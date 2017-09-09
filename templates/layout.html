@@ -3,7 +3,7 @@
 <html>
 
     <head>
-        
+
         <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta -->
         <meta charset="utf-8"/>
         <meta content="initial-scale=1, width=device-width" name="viewport"/>
@@ -19,10 +19,10 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-        
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script type="text/javascript" src="static/TimeCircles.js"></script>
         <link href="static/TimeCircles.css" rel="stylesheet">
         <link href="static/TCexample.css" rel="stylesheet">
@@ -30,12 +30,12 @@
 <!--        <link rel='shortcut icon' type='image/x-icon' href='templates/favicon.ico' />-->
         <link rel="icon" type="image/x-icon" href="../static/favicon.ico">
 
-        
+
         <title class="title">
             Prioritas {% block title %}{% endblock %}
         </title>
 
-        
+
     </head>
 
     <body>
@@ -64,7 +64,6 @@
                         {% else %}
                             <ul class="nav navbar-nav">
                                 <li><a href="{{ url_for('guide') }}">User Guide</a></li>
-                                <li><a href="{{ url_for('register') }}">Register</a></li>
                                 <li><a href="{{ url_for('logout') }}">Log In</a></li>
                                 <li style="margin-top: -8px"><a href="{{ url_for('index') }}"><img src="../static/pomodoro.png" style="height: 35px"/></a></li>
                             </ul>
@@ -72,11 +71,11 @@
                     </div>
                 </div>
             </nav>
-            
+
             <a href="{{ url_for('index') }}">
-                <div class="box banner">Pri<img src="static/pomodoro.png" style="height: 175px"/>ritas</div> 
+                <div class="box banner">Pri<img src="static/pomodoro.png" style="height: 175px"/>ritas</div>
             </a>
-			
+
             {% if get_flashed_messages() %}
                 <header>
                     <div class="alert alert-info" role="alert">

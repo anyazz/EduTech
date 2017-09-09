@@ -22,7 +22,6 @@ nltk==3.2.1
 oauthlib==2.0.0
 passlib==1.6.5
 plotly==1.12.9
-psycopg2==2.6.2
 pycurl==7.19.3
 python-openid==2.2.5
 pytz==2016.7

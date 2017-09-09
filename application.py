@@ -72,25 +72,11 @@ def login_required(f):
 @login_required
 def index():
     """Home page."""
-    # get todos for user
-    rows = db.execute("SELECT todo, category FROM todos WHERE user_id = :id ", id = session["user_id"])
-
-    # initialize index table
-
-    list1, list2, list3, list4 = [], [], [], []
-    #store table values
-    for i in range(len(rows)):
-        if rows[i]["category"] == 1:
-            list1.append(rows[i]["todo"])
-        if rows[i]["category"] == 2:
-            list2.append(rows[i]["todo"])
-        if rows[i]["category"] == 3:
-            list3.append(rows[i]["todo"])
-        if rows[i]["category"] == 4:
-            list4.append(rows[i]["todo"])
-
-    # return
-    return render_template("index.html", list1 = list1, list2 = list2, list3 = list3, list4 = list4)
+    
+    classroom = session["classroom"]
+    student = session["student"]
+    
+    return render_template("index.html", classroom = classroom, student = student)
 
 @app.route("/")
 def guide():

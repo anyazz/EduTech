@@ -69,7 +69,6 @@ def login_required(f):
     return decorated_function
 
 @app.route("/index", methods=["GET", "POST"])
-@login_required
 def index():
     """Home page."""
     
@@ -87,6 +86,9 @@ def guide():
 def search():
     return render_template("search.html")
 
+@app.route("/sort", methods=["GET", "POST"])
+def sort():
+    return render_template("sort.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -106,6 +108,8 @@ def login():
         session["student"] = request.form.get("student")
         session["classroom"] = request.form.get("classroom")
 
+        print "here!!!!!!!!!!!!!!!!!"
+        
         return redirect(url_for("index"))
 
 

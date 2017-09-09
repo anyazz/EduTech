@@ -25,12 +25,12 @@ td
 {
     /* centers tables' cells */
     text-align: center;
-    
+
     /* font formatting */
     font-family: 'bebasregular';
     letter-spacing: .5px;
     word-spacing: 3px;
-    
+
     width: 39%;
     vertical-align: top;
 }
@@ -42,7 +42,7 @@ th
 {
     /* centers tables' cells */
     text-align: center;
-    
+
     /* font formatting */
     font-family: 'bebasregular';
     letter-spacing: .5px;
@@ -50,7 +50,7 @@ th
     font-size: 25pt;
     color: white;
     padding: 4px;
-    
+
     height: 20px;
 }
 
@@ -89,7 +89,7 @@ th
     width: 100%;
     font-style: center;
     font-size: 350%;
-	color:#ffffff;
+    color:#ffffff;
 }
 
 .forgot_pass
@@ -151,20 +151,20 @@ th
     font-size: 10vw;
     color: white;
     line-height: 180px;
-	margin-left: -250px;
+    margin-left: -250px;
 
 }
 
 .box {
     position: fixed;
-	top: 34vh;
-	margin-left: -250px;
+    top: 34vh;
+    margin-left: -250px;
     width: 150vh;
     background-color: #8c3731;
     height: 15vw;
     transform: rotate(-90deg);
     z-index: 100;
-    
+
 }
 
 /* Changes site background and default text color */
@@ -238,10 +238,10 @@ li.list-group-item:hover {
 }
 
 a {
-	color:#ffffff
+    color:#ffffff
 }
 a:hover{
-	color: #7e0505
+    color: #7e0505
 }
 
 
@@ -261,18 +261,18 @@ a:hover{
 }
 
 .delete {
-	background-color:transparent;
-	display:inline-block;
-	cursor:pointer;
-	color: white;
-	font-family: Arial;
-	font-size: 15px;
-	text-decoration:none;
-	border: none;
-	margin-left: 5px;
+    background-color:transparent;
+    display:inline-block;
+    cursor:pointer;
+    color: white;
+    font-family: Arial;
+    font-size: 15px;
+    text-decoration:none;
+    border: none;
+    margin-left: 5px;
 }
 .delete:hover {
-	color: #5a4f4e;
+    color: #5a4f4e;
 }
 
 /* The Modal (background) */
@@ -382,5 +382,9 @@ a:hover{
 .has-error .form-control-feedback {
     color: #d1cfcf;
 }
+
+
+
+
 
 

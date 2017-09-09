@@ -15,10 +15,18 @@ body {
   width: 100%;
 }
 
+.body {
+  height: 100%;
+  width: 100%;
+}
+
+#main-html {
+  height: 90%;
+}
+
 .triple-container {
   display: flex;
   flex-direction: row;
-  padding: 50px;
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -28,12 +36,52 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  margin: 50px;
+  padding: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.triple:hover {
+  background-color: #99cdc5;
+  transition: all 2s;
+}
+
+#triple-recursion:hover > #image-recursion,
+#triple-sort:hover > #image-sort,
+#triple-search:hover > #image-search {
+  filter:brightness(200%);
+  transition: all 1s;
+}
+
+
+.title-index {
+  margin-bottom: 60px;
+  width: 270px;
+	height: 50px;
+	font-family: Lato;
+	font-size: 30px;
+	line-height: 1.25;
+	letter-spacing: 5px;
+	text-align: center;
+	color: #ffffff;
+}
+
+.body-index {
+  margin-top: 40px;
+  width: 283px;
+	height: 180px;
+	font-family: Lato;
+	font-size: 18px;
+	color: #ffffff;
+  text-align: center;
 }
 
 .icons-img {
-  height: 40%;
-  width: 40%;
+  height: 100px;
+}
+
+.icons-img:hover {
+  height: 120px;
 }
 
 img {

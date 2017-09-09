@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+
+{% block title %} Search Algorithms
+{% endblock %}
+
+{% block main %}
+
+
+<link rel="stylesheet" type="text/css" href="../static/fullPage-js/jquery.fullPage.css" />
+<link rel="stylesheet" type="text/css" href="../static/fullPage-js/examples.css" />
+<script type="text/javascript" src="../static/fullPage-js/jquery.fullPage.min.js"></script>
+<script type="text/javascript" src="../static/fullPage-js/examples.js"></script>
+
+<style>
+    /* Style for our header texts
+        * --------------------------------------- */
+
+    h1 {
+        font-size: 5em;
+        font-family: arial, helvetica;
+        color: #fff;
+        margin: 0;
+    }
+
+    .intro p {
+        color: #fff;
+    }
+    /* Centered texts in each section
+        * --------------------------------------- */
+
+    .section {
+        text-align: center;
+    }
+    /* Overwriting styles for the navigation dots (to place it where we want)
+        * --------------------------------------- */
+
+    .fp-slidesNav.bottom {
+        bottom: 25px;
+    }
+    /* Bottom menu
+        * --------------------------------------- */
+
+    #infoMenu li a {
+        color: #fff;
+    }
+
+    #section2 h1 {
+        color: #333;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#fullpage').fullpage({
+            anchors: ['firstPage', 'secondPage', '3rdPage'],
+            sectionsColor: ['#8FB98B', '#DE564B', '#EAE1C0'],
+            slidesNavigation: true
+        });
+    });
+</script>
+
+
+<div id="fullpage">
+    <div class="section " id="section0">
+        <div class="intro">
+            <img src="https://raw.githubusercontent.com/alvarotrigo/fullPage.js/master/examples/imgs/1.png" alt="1" />
+            <h1>Search Algorithms</h1>
+            <p>Learn how to retrive information stored in lists.</p>
+        </div>
+    </div>
+    <div class="section" id="section1">
+        <div class="slide" id="slide1" data-anchor="slide1">
+            <div class="intro">
+                <h1>Searching cards</h1>
+                <p>
+                    Say you have a sorted deck of cards numbered 1 to 32, and you want to find the 14th. You could go through the cards, one at a time, looking for the one labeled 14. Alternatively, you could split the deck in half, knowing that your desired card is somewhere in the first 16. By comparing 14 to the middle card over and over and getting rid of the half that’s either too big or too small, you would eventually be able to find the right card in only 5 steps as opposed to 14.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide" id="slide2" data-anchor="slide2">
+            <h1>Binary Search</h1>
+            <p>
+                This example illustrates the concept of binary search. While linear search involves manually checking one item in a list at a time, binary search uses recursion to continually cut the list in half until only one item is left. At its worst, searching a list of size n using linear search can take n steps (if, for example, n is the last one in the list). For binary search, however, the maximum number of steps it can take to find an element is log_2(n). For large lists, this can make an enormous difference in runtime.
+            </p>
+        </div>
+
+        <div class="slide" id="slide3" data-anchor="slide3">
+            <h1>Slide 2</h1>
+        </div>
+
+    </div>
+    <div class="section" id="section2">
+        <div class="intro">
+            <h1>Enjoy it</h1>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,4 +1,4 @@
-from library50 import cs50
+#from library50 import cs50
 from flask import Flask, flash, redirect, render_template, request, session, url_for, jsonify
 from flask_session import Session
 from flask_jsglue import JSGlue
@@ -14,46 +14,20 @@ import urlparse
 # import urllib.request
 from functools import wraps
 import sqlalchemy
-import psycopg2
+#import psycopg2
 
-urlparse.uses_netloc.append("postgres")
-url = urlparse.urlparse(os.environ["DATABASE_URL"])
+#urlparse.uses_netloc.append("postgres")
+#url = urlparse.urlparse(os.environ["DATABASE_URL"])
+#
+#conn = psycopg2.connect(
+#    database=url.path[1:],
+#    user=url.username,
+#    password=url.password,
+#    host=url.hostname,
+#    port=url.port
+#)
 
-conn = psycopg2.connect(
-    database=url.path[1:],
-    user=url.username,
-    password=url.password,
-    host=url.hostname,
-    port=url.port
-)
 
-# taken from CS50 Python Library due to issues with importing
-class SQL(object):
-    def __init__(self, url):
-        try:
-            self.engine = sqlalchemy.create_engine(url)
-        except Exception as e:
-            raise RuntimeError(e)
-    def execute(self, text, *multiparams, **params):
-        try:
-            statement = sqlalchemy.text(text).bindparams(*multiparams, **params)
-            result = self.engine.execute(str(statement.compile(compile_kwargs={"literal_binds": True})))
-            # SELECT
-            if result.returns_rows:
-                rows = result.fetchall()
-                return [dict(row) for row in rows]
-            # INSERT
-            elif result.lastrowid is not None:
-                return result.lastrowid
-            # DELETE, UPDATE
-            else:
-                return result.rowcount
-        except sqlalchemy.exc.IntegrityError:
-            return None
-        except Exception as e:
-            raise RuntimeError(e)
-
-            
 # configure application
 app = Flask(__name__)
 JSGlue(app)
@@ -75,7 +49,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # configure CS50 Library to use SQLite database
-db = SQL(os.environ["DATABASE_URL"])
+#db = SQL(os.environ["DATABASE_URL"])
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/Anya'
 # db = SQLAlchemy(app)
 
@@ -93,7 +67,7 @@ def login_required(f):
             return redirect(url_for("login", next=request.url))
         return f(*args, **kwargs)
     return decorated_function
-    
+
 @app.route("/index", methods=["GET", "POST"])
 @login_required
 def index():
@@ -122,7 +96,7 @@ def index():
 def guide():
     """User's guide page"""
     return render_template("guide.html")
-    
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in."""
@@ -132,7 +106,7 @@ def login():
 
     # if user reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        
+
 
         # ensure username was submitted
         if not request.form.get("username"):
@@ -165,18 +139,18 @@ def login():
 def forgot_pass():
     """Send User Password"""
     if request.method == "POST":
-        
+
         # ensure email was submitted
         if not request.form.get("username"):
             return render_template("forgot_pass.html")
-        
+
         #query database for username
         rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-        
+
         #ensure username exists
         if len(rows) == 0:
             return render_template("reset_failed.html")
-        
+
         #change password & send email
         else:
             new_pass = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
@@ -186,11 +160,11 @@ def forgot_pass():
 
             message = """Subject: Password Reset
 
-            \nHi! Your new password is below. 
-            
+            \nHi! Your new password is below.
+
             \nNew Password: {}
-            
-            \nPlease login with your reset password. If you wish to change this temporary password, click "change password" once you are logged in. 
+
+            \nPlease login with your reset password. If you wish to change this temporary password, click "change password" once you are logged in.
             """.format(new_pass)
 
             try:
@@ -204,7 +178,7 @@ def forgot_pass():
                 return render_template("reset_success.html")
             except smtplib.SMTPException:
                 return render_template("reset_failed.html")
-                
+
     else:
         return render_template("forgot_pass.html")
 
@@ -230,7 +204,7 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user."""
-    
+
     # forget any user_id
     session.clear()
 
@@ -243,15 +217,15 @@ def register():
         # ensure username does not already exist
         if len(rows) != 0:
             return render_template("username_taken.html")
-        
+
         # add user to users
         db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"), hash = pwd_context.encrypt(request.form["password"]))
-        
+
         # update existing session
         rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
         session["user_id"] = rows[0]["id"]
 
-        
+
         # Let user know registration successful
         return render_template("register_success.html")
 
@@ -259,7 +233,7 @@ def register():
     else:
         return render_template("register.html")
 
-        
+
 @app.route("/password", methods=["GET", "POST"])
 @login_required
 def password():
@@ -267,23 +241,23 @@ def password():
 
      # if user reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        
+
         # ensure old password was submitted
         if not request.form.get("old"):
             return apology("please provide current password")
-        
+
         # ensure old password is correct
         rows = db.execute("SELECT * FROM users WHERE id = :id", id = session["user_id"])
         if not pwd_context.verify(request.form.get("old"), rows[0]["hash"]):
             return apology("Current password incorrect")
-        
+
         # ensure new password was submitted
         elif not request.form.get("new") or not request.form.get("new2"):
             return apology("must provide new password")
-        
+
         # ensure new passwords are equal
         elif not request.form.get("new") == request.form.get("new2"):
-            return apology("passwords don't match")    
+            return apology("passwords don't match")
 
         # update database
         db.execute("UPDATE users SET hash = :hash WHERE id = :id", hash = pwd_context.encrypt(request.form.get("new2")), id = session["user_id"])
@@ -300,7 +274,7 @@ def saveTodo():
     # add todo & corresponding data to table
     db.execute("INSERT INTO todos (user_id, todo, category) VALUES (:id, :todo, :category)", id=session["user_id"], todo=request.args.get("todo"), category=request.args.get("category"))
     return jsonify(dict());
-    
+
 @app.route("/removeTodo")
 def removeTodo():
     """Delete task from SQL."""
@@ -310,8 +284,8 @@ def removeTodo():
 
 @app.route("/updateTime")
 def updateTime():
-    # update number of pomorodos for todo 
-    db.execute("UPDATE todos SET pomodoros = :pomodoros WHERE (user_id = :id AND todo = :todo AND category = :category)", pomodoros=request.args.get("pomodoros"), id=session["user_id"], todo=request.args.get("todo"), 
+    # update number of pomorodos for todo
+    db.execute("UPDATE todos SET pomodoros = :pomodoros WHERE (user_id = :id AND todo = :todo AND category = :category)", pomodoros=request.args.get("pomodoros"), id=session["user_id"], todo=request.args.get("todo"),
     category=request.args.get("category"))
     return jsonify(dict());
 
@@ -319,7 +293,7 @@ def updateTime():
 @app.route("/getTime")
 def getTime():
     # get number of pomodoros for todo
-    time = db.execute("SELECT pomodoros FROM todos WHERE (user_id = :id AND todo = :todo AND category = :category)", id=session["user_id"], todo=request.args.get("todo"), 
+    time = db.execute("SELECT pomodoros FROM todos WHERE (user_id = :id AND todo = :todo AND category = :category)", id=session["user_id"], todo=request.args.get("todo"),
     category=request.args.get("category"))
     return jsonify(time)
 

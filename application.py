@@ -106,28 +106,38 @@ def login():
 
     # if user reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-
-
-        # ensure username was submitted
-        if not request.form.get("username"):
+        if not request.form.get("classroom"):
             return render_template("login.html")
 
-        # ensure password was submitted
-        elif not request.form.get("password"):
+        elif not request.form.get("student"):
             return render_template("login.html")
 
-        # query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+        session["student"] = request.form.get("student")
+        session["classroom"] = request.form.get("classroom")
 
-        # ensure username exists and password is correct
-        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            return render_template("incorrect_pass.html")
-
-        # remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-
-        # redirect user to home page
         return redirect(url_for("index"))
+
+
+#        # ensure username was submitted
+#        if not request.form.get("username"):
+#            return render_template("login.html")
+#
+#        # ensure password was submitted
+#        elif not request.form.get("password"):
+#            return render_template("login.html")
+#
+#        # query database for username
+#        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+#
+#        # ensure username exists and password is correct
+#        if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
+#            return render_template("incorrect_pass.html")
+#
+#        # remember which user has logged in
+#        session["user_id"] = rows[0]["id"]
+#
+#        # redirect user to home page
+#        return redirect(url_for("index"))
 
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
@@ -135,60 +145,60 @@ def login():
 
 
 
-@app.route("/forgot_pass", methods=["GET", "POST"])
-def forgot_pass():
-    """Send User Password"""
-    if request.method == "POST":
+#@app.route("/forgot_pass", methods=["GET", "POST"])
+#def forgot_pass():
+#    """Send User Password"""
+#    if request.method == "POST":
+#
+#        # ensure email was submitted
+#        if not request.form.get("username"):
+#            return render_template("forgot_pass.html")
+#
+#        #query database for username
+#        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+#
+#        #ensure username exists
+#        if len(rows) == 0:
+#            return render_template("reset_failed.html")
+#
+#        #change password & send email
+#        else:
+#            new_pass = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
+#            db.execute("UPDATE users SET hash = :hash WHERE id = :id", hash = pwd_context.encrypt(new_pass), id = rows[0]["id"])
+#            sender = 'prioritas.cs50@gmail.com'
+#            receivers = [rows[0]["username"]]
+#
+#            message = """Subject: Password Reset
+#
+#            \nHi! Your new password is below.
+#
+#            \nNew Password: {}
+#
+#            \nPlease login with your reset password. If you wish to change this temporary password, click "change password" once you are logged in.
+#            """.format(new_pass)
+#
+#            try:
+#                smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
+#                type(smtpObj)
+#                smtpObj.ehlo()
+#                smtpObj.starttls()
+#                smtpObj.login(' prioritas.cs50@gmail.com ', ' prioritas ')
+#                smtpObj.sendmail(sender, receivers, message)
+#                smtpObj.quit()
+#                return render_template("reset_success.html")
+#            except smtplib.SMTPException:
+#                return render_template("reset_failed.html")
+#
+#    else:
+#        return render_template("forgot_pass.html")
 
-        # ensure email was submitted
-        if not request.form.get("username"):
-            return render_template("forgot_pass.html")
-
-        #query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-
-        #ensure username exists
-        if len(rows) == 0:
-            return render_template("reset_failed.html")
-
-        #change password & send email
-        else:
-            new_pass = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(8))
-            db.execute("UPDATE users SET hash = :hash WHERE id = :id", hash = pwd_context.encrypt(new_pass), id = rows[0]["id"])
-            sender = 'prioritas.cs50@gmail.com'
-            receivers = [rows[0]["username"]]
-
-            message = """Subject: Password Reset
-
-            \nHi! Your new password is below.
-
-            \nNew Password: {}
-
-            \nPlease login with your reset password. If you wish to change this temporary password, click "change password" once you are logged in.
-            """.format(new_pass)
-
-            try:
-                smtpObj = smtplib.SMTP('smtp.gmail.com', 587)
-                type(smtpObj)
-                smtpObj.ehlo()
-                smtpObj.starttls()
-                smtpObj.login(' prioritas.cs50@gmail.com ', ' prioritas ')
-                smtpObj.sendmail(sender, receivers, message)
-                smtpObj.quit()
-                return render_template("reset_success.html")
-            except smtplib.SMTPException:
-                return render_template("reset_failed.html")
-
-    else:
-        return render_template("forgot_pass.html")
-
-@app.route("/incorrect_pass", methods=["GET", "POST"])
-def incorrect_pass():
-    """Display for incorrect passwords."""
-    if request.method == "POST":
-        return login()
-    else:
-        return render_template("incorrect_pass.html")
+#@app.route("/incorrect_pass", methods=["GET", "POST"])
+#def incorrect_pass():
+#    """Display for incorrect passwords."""
+#    if request.method == "POST":
+#        return login()
+#    else:
+#        return render_template("incorrect_pass.html")
 
 @app.route("/logout")
 def logout():
@@ -201,72 +211,73 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route("/register", methods=["GET", "POST"])
-def register():
-    """Register user."""
 
-    # forget any user_id
-    session.clear()
+#@app.route("/register", methods=["GET", "POST"])
+#def register():
+#    """Register user."""
+#
+#    # forget any user_id
+#    session.clear()
+#
+#    # if user reached route via POST (as by submitting a form via POST)
+#    if request.method == "POST":
+#
+#        # query database for username
+#        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+#
+#        # ensure username does not already exist
+#        if len(rows) != 0:
+#            return render_template("username_taken.html")
+#
+#        # add user to users
+#        db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"), hash = pwd_context.encrypt(request.form["password"]))
+#
+#        # update existing session
+#        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+#        session["user_id"] = rows[0]["id"]
+#
+#
+#        # Let user know registration successful
+#        return render_template("register_success.html")
+#
+#    # else if user reached route via GET (as by clicking a link or via redirect)
+#    else:
+#        return render_template("register.html")
 
-    # if user reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
 
-        # query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-
-        # ensure username does not already exist
-        if len(rows) != 0:
-            return render_template("username_taken.html")
-
-        # add user to users
-        db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"), hash = pwd_context.encrypt(request.form["password"]))
-
-        # update existing session
-        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
-        session["user_id"] = rows[0]["id"]
-
-
-        # Let user know registration successful
-        return render_template("register_success.html")
-
-    # else if user reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("register.html")
-
-
-@app.route("/password", methods=["GET", "POST"])
-@login_required
-def password():
-    """Change password."""
-
-     # if user reached route via POST (as by submitting a form via POST)
-    if request.method == "POST":
-
-        # ensure old password was submitted
-        if not request.form.get("old"):
-            return apology("please provide current password")
-
-        # ensure old password is correct
-        rows = db.execute("SELECT * FROM users WHERE id = :id", id = session["user_id"])
-        if not pwd_context.verify(request.form.get("old"), rows[0]["hash"]):
-            return apology("Current password incorrect")
-
-        # ensure new password was submitted
-        elif not request.form.get("new") or not request.form.get("new2"):
-            return apology("must provide new password")
-
-        # ensure new passwords are equal
-        elif not request.form.get("new") == request.form.get("new2"):
-            return apology("passwords don't match")
-
-        # update database
-        db.execute("UPDATE users SET hash = :hash WHERE id = :id", hash = pwd_context.encrypt(request.form.get("new2")), id = session["user_id"])
-
-        # redirect user to home page
-        return redirect(url_for("index"))
-    # else if user reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("password.html")
+#@app.route("/password", methods=["GET", "POST"])
+#@login_required
+#def password():
+#    """Change password."""
+#
+#     # if user reached route via POST (as by submitting a form via POST)
+#    if request.method == "POST":
+#
+#        # ensure old password was submitted
+#        if not request.form.get("old"):
+#            return apology("please provide current password")
+#
+#        # ensure old password is correct
+#        rows = db.execute("SELECT * FROM users WHERE id = :id", id = session["user_id"])
+#        if not pwd_context.verify(request.form.get("old"), rows[0]["hash"]):
+#            return apology("Current password incorrect")
+#
+#        # ensure new password was submitted
+#        elif not request.form.get("new") or not request.form.get("new2"):
+#            return apology("must provide new password")
+#
+#        # ensure new passwords are equal
+#        elif not request.form.get("new") == request.form.get("new2"):
+#            return apology("passwords don't match")
+#
+#        # update database
+#        db.execute("UPDATE users SET hash = :hash WHERE id = :id", hash = pwd_context.encrypt(request.form.get("new2")), id = session["user_id"])
+#
+#        # redirect user to home page
+#        return redirect(url_for("index"))
+#    # else if user reached route via GET (as by clicking a link or via redirect)
+#    else:
+#        return render_template("password.html")
 
 @app.route("/saveTodo")
 def saveTodo():

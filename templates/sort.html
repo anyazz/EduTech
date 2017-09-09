@@ -87,7 +87,10 @@
         </div>
 
         <div class="slide" id="slide3" data-anchor="slide3">
-            <h1>Slide 2</h1>
+            <h1>Merge Sort</h1>
+            <p>
+                You now have a hand of cards that is sorted in ascending order. However, you decide that this sorting is not optimal for the goals of the game you are playing, and you would actually like your cards to be sorted in descending order. You also decide that there must be a faster way to sort your hand than insertion sort since using insertion sort would require 81 steps (can you figure out why?). Instead, you decide that a divide-and-conquer method would be more effective. You start with you hand of cards: {3, 4, 5, 6, 7, 8, 9, 10} and split the hand of cards into 2 piles: on the left you have {3, 4, 5, 6}, and on the right you have {7, 8, 9, 10}. Better yet, you split each of the 2 piles in half again, so you now have {3, 4}, {5, 6}, {7, 8}, and {9, 10}. Splitting the piles once again, you now have {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10} in 8 separate piles. Since you cannot divide the piles into anymore sub-piles, you begin merging the piles in the correct descending order. Starting from the left most piles, you merge {3} and {4} into {4, 3}. Next, you merge {5} and {6} into {6, 5}, merge {7} and {8} into {8, 7} and {9} and {10} into {10, 9}. Now, begin merging the piles of 2 such that {4, 3} and {6, 5} become {6, 5, 4, 3}, and so on until the entire list is sorted.
+            </p>
         </div>
 
     </div>

@@ -24,7 +24,7 @@ passlib==1.6.5
 plotly==1.12.9
 python-openid==2.2.5
 pytz==2016.7
-requests==2.2.1
+requests==2.20.0
 requests-oauthlib==0.7.0
 SQLAlchemy==1.1.3
 termcolor==1.1.0
